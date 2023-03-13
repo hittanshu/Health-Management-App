@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-class PatientRegistrationPage extends JFrame{
+class Myframe extends JFrame implements ActionListener{
 
     JLabel label1,label2,label3,label4,label5;
     JTextField t1,t2;
@@ -11,7 +11,7 @@ class PatientRegistrationPage extends JFrame{
     JTextArea ta1;
     JButton submit;
 
-	PatientRegistrationPage(){
+	Myframe(){
 		setTitle("Registration Form");
 		setSize(500, 500);
 		setLocationRelativeTo(null);
@@ -27,7 +27,7 @@ class PatientRegistrationPage extends JFrame{
         t1.setBounds(80 , 10, 150, 20);
         c.add(t1);
 
-        label2 = new JLabel("Mobile");
+        label2 = new JLabel("E-Mail");
         label2.setBounds(20,40,100,20);
         c.add(label2);
 
@@ -77,16 +77,23 @@ class PatientRegistrationPage extends JFrame{
 
         submit = new JButton("Submit");
         submit.setBounds(20,250,80,20);
+        submit.addActionListener(this);
         c.add(submit);
 
 		setVisible(true);
 }
-
-}
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == submit) {
+                PatientLoginPage patientHomePage = new PatientLoginPage();
+                setVisible(false);
+            }
+        }
+    }
 
 class RegistrationForm{
 	public static void main(String args[]){
-        PatientRegistrationPage Regiser = new PatientRegistrationPage();
+        Myframe frame = new Myframe();
 }
 
 }
