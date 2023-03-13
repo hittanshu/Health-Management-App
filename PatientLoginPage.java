@@ -59,8 +59,7 @@ public class PatientLoginPage extends JFrame implements ActionListener {
     }
 
     private boolean isValid(String email, String password) {
-        // Validate email and password here
-        // For demo purposes, we'll just accept any non-empty email and password
+
         return !email.isEmpty() && !password.isEmpty();
     }
 
