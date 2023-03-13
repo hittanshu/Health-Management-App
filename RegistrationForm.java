@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-class Myframe extends JFrame{
+class PatientRegistrationPage extends JFrame{
 
     JLabel label1,label2,label3,label4,label5;
     JTextField t1,t2;
@@ -11,7 +11,7 @@ class Myframe extends JFrame{
     JTextArea ta1;
     JButton submit;
 
-	Myframe(){
+	PatientRegistrationPage(){
 		setTitle("Registration Form");
 		setSize(500, 500);
 		setLocationRelativeTo(null);
@@ -86,7 +86,7 @@ class Myframe extends JFrame{
 
 class RegistrationForm{
 	public static void main(String args[]){
-        Myframe frame = new Myframe();
+        PatientRegistrationPage Regiser = new PatientRegistrationPage();
 }
 
 }

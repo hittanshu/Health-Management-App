@@ -16,7 +16,7 @@ public class PatientHomePage extends JFrame {
         setLayout(new GridLayout(4, 2));
 
         // Welcome User
-        welcomeLabel = new JLabel("Welcome Hittanshu");
+        welcomeLabel = new JLabel("Welcome Hittanshu ! ");
         add(welcomeLabel);
 
         // Upcoming Appointments
