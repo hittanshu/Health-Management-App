@@ -59,6 +59,7 @@ public class PatientHomePage extends JFrame {
 
         setVisible(true);
     }
+    
 
     public static void main(String args[]) {
         PatientHomePage PatientHome = new PatientHomePage();
