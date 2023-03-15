@@ -94,9 +94,8 @@ class PatientRegistrationPage extends JFrame implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == submit) {
-                if(e.getSource==submit){
-                    try {
+            if (e.getSource() == submit){
+                try {
                         // Connect to the MySQL database using XAMPP
                         String url = "jdbc:mysql://localhost:3306/HealthManagementSystem";
                         String user = "root";
@@ -119,7 +118,7 @@ class PatientRegistrationPage extends JFrame implements ActionListener{
                         conn.close();
                         System.out.println("Disconnected from the MySQL database");
                     }
-                    catch (SQLException e){
+                    catch (SQLException ex){
                         System.err.println("Error connecting to the MySQL database: " + e.getMessage());
                     }
                 }
@@ -128,5 +127,4 @@ class PatientRegistrationPage extends JFrame implements ActionListener{
                 }
         }
         
-}
        
