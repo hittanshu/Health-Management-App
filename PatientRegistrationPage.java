@@ -2,8 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 class PatientRegistrationPage extends JFrame implements ActionListener{
 
@@ -85,10 +83,6 @@ class PatientRegistrationPage extends JFrame implements ActionListener{
 		setVisible(true);
         
     }
-        
-
-    
-   
     public static void main(String args[]){
         PatientRegistrationPage Register = new PatientRegistrationPage();
         }
@@ -104,9 +98,21 @@ class PatientRegistrationPage extends JFrame implements ActionListener{
                         Connection conn = DriverManager.getConnection(url, user, password);
                         System.out.println("Connected to the MySQL database");
                 
+                        //for continously incrementing patient id
+                        String selectpatientid = "SELECT latest_id FROM patient_id";
+                        Statement statement1 = conn.createStatement();
+                        ResultSet resultSet = statement1.executeQuery(selectpatientid);
+                        resultSet.next();
+                        int latestPatientID = resultSet.getInt("latest_id");
+                        int newPatientID = latestPatientID + 1;
+                        String updatepatientid = "UPDATE patient_id SET latest_id = ?";
+                        PreparedStatement statement2 = conn.prepareStatement(updatepatientid);
+                        statement2.setInt(1, newPatientID);
+                        statement2.executeUpdate();
+
                         String insertpatientdata = "INSERT INTO patient(PatientID, Name, Mobile, Gender, DOB, Medicalhistory) VALUES (?,?,?,?,?,?)";
                         PreparedStatement statement = conn.prepareStatement(insertpatientdata);
-                        statement.setInt(1, 4);
+                        statement.setInt(1, newPatientID);
                         statement.setString(2, t1.getText());
                         statement.setString(3, t2.getText());
                         statement.setString(4, male.isSelected() ? "Male" : "Female");
