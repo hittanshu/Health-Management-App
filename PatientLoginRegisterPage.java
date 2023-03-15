@@ -4,13 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class PatientLoginRegisterPage extends JFrame {
-    private JButton loginButton, registerButton;
+    private JButton loginButton, registerButton, adminLoginButton;
     
     public PatientLoginRegisterPage() {
         super("Patient Login/Register Page");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 300);
-        setLayout(new GridLayout(2, 1));
+        setLayout(new GridLayout(3, 1));
         
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
         
@@ -36,6 +36,16 @@ public class PatientLoginRegisterPage extends JFrame {
         });
         panel.add(registerButton);
         
+        adminLoginButton = new JButton("Admin Login");
+        adminLoginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Open the registration page
+                dispose();
+                new AdminLoginPage();
+            }
+        });
+        panel.add(adminLoginButton);
         add(panel);
         
         setVisible(true);
