@@ -69,6 +69,7 @@ public class ViewPatients extends JFrame {
                 if (selectedRow == -1) {
                     JOptionPane.showMessageDialog(ViewPatients.this, "Please select a patient to delete.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
+                    
                 }
                 
                 int patientId = (int) model.getValueAt(selectedRow, 0);
@@ -133,7 +134,16 @@ public class ViewPatients extends JFrame {
                         PreparedStatement stmt = con.prepareStatement(sql);
                         stmt.setInt(1, patientId);
                         stmt.executeUpdate();
-                        
+                        String selectpatientid = "SELECT latest_id FROM patient_id";
+                        Statement statement1 = con.createStatement();
+                        ResultSet resultSet = statement1.executeQuery(selectpatientid);
+                        resultSet.next();
+                        int latestPatientID = resultSet.getInt("latest_id");
+                        int newPatientID = latestPatientID - 1;
+                        String updatepatientid = "UPDATE patient_id SET latest_id = ?";
+                        PreparedStatement statement2 = con.prepareStatement(updatepatientid);
+                        statement2.setInt(1, newPatientID);
+                        statement2.executeUpdate();
                         // reload table data
                         loadData();
                         
