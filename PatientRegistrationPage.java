@@ -82,34 +82,9 @@ class PatientRegistrationPage extends JFrame implements ActionListener{
         c.add(submit);  
 
 		setVisible(true);
-
-        try {
-            // Connect to the MySQL database using XAMPP
-            String url = "jdbc:mysql://localhost:3306/HospitalManagementSystem";
-            String user = "root";
-            String password = "";
-            Connection conn = DriverManager.getConnection(url, user, password);
-            System.out.println("Connected to the MySQL database");
-    
-            String insertpatientdata = "INSERT INTO patient(PatientID, Name, Mobile, Gender, DOB, Medicalhistory) VALUES (?,?,?,?,?,?)";
-            PreparedStatement statement = conn.prepareStatement(insertpatientdata);
-            statement.setInt(1, 3);
-            statement.setString(2, t1.getText());
-            statement.setString(3, t2.getText());
-            statement.setString(4, male.isSelected() ? "Male" : "Female");
-            String dob = day.getSelectedItem() + "-" + (month.getSelectedIndex()+1) + "-" + year.getSelectedItem();
-            statement.setString(5, dob);
-            statement.setString(6, ta1.getText());
-            int rowsInserted = statement.executeUpdate();
-            
-            System.out.println(rowsInserted + " row(s) inserted");
-            conn.close();
-            System.out.println("Disconnected from the MySQL database");
-        }
-        catch (SQLException e){
-            System.err.println("Error connecting to the MySQL database: " + e.getMessage());
-        }
+        
     }
+        
 
     
    
@@ -120,6 +95,34 @@ class PatientRegistrationPage extends JFrame implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == submit) {
+                if(e.getSource==submit){
+                    try {
+                        // Connect to the MySQL database using XAMPP
+                        String url = "jdbc:mysql://localhost:3306/HealthManagementSystem";
+                        String user = "root";
+                        String password = "";
+                        Connection conn = DriverManager.getConnection(url, user, password);
+                        System.out.println("Connected to the MySQL database");
+                
+                        String insertpatientdata = "INSERT INTO patient(PatientID, Name, Mobile, Gender, DOB, Medicalhistory) VALUES (?,?,?,?,?,?)";
+                        PreparedStatement statement = conn.prepareStatement(insertpatientdata);
+                        statement.setInt(1, 3);
+                        statement.setString(2, t1.getText());
+                        statement.setString(3, t2.getText());
+                        statement.setString(4, male.isSelected() ? "Male" : "Female");
+                        String dob = day.getSelectedItem() + "-" + (month.getSelectedIndex()+1) + "-" + year.getSelectedItem();
+                        statement.setString(5, dob);
+                        statement.setString(6, ta1.getText());
+                        int rowsInserted = statement.executeUpdate();
+                        
+                        System.out.println(rowsInserted + " row(s) inserted");
+                        conn.close();
+                        System.out.println("Disconnected from the MySQL database");
+                    }
+                    catch (SQLException e){
+                        System.err.println("Error connecting to the MySQL database: " + e.getMessage());
+                    }
+                }
                     PatientLoginRegisterPage patientHomePageafterreg = new PatientLoginRegisterPage();
                     setVisible(false);
                 }
