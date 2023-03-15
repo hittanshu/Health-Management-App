@@ -10,7 +10,7 @@ public class AdminView extends JFrame implements ActionListener {
         // Set up the frame
         super("Admin // Health Management System");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 500);
+        setSize(200, 200);
 
         // Create the buttons
         patientButton = new JButton("Manage Patients");
@@ -32,13 +32,11 @@ public class AdminView extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // Handle button clicks
         if (e.getSource() == patientButton) {
-            // Open the patient management screen
-            // PatientManagementScreen patientManagementScreen = new PatientManagementScreen();
+            ManagePatientMenu patientManagementScreen = new ManagePatientMenu();
         } else if (e.getSource() == doctorButton) {
-            // Open the doctor management screen
-            // DoctorManagementScreen doctorManagementScreen = new DoctorManagementScreen();
+            ManageDoctorMenu doctorManagementScreen = new ManageDoctorMenu();
+        }
     }
-
     public static void main(String[] args) {
         AdminView Admin = new AdminView();
     }
