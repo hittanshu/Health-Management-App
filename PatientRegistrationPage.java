@@ -2,11 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
-
 class PatientRegistrationPage extends JFrame implements ActionListener{
 
-    JLabel label1,label2,label3,label4,label5;
-    JTextField t1,t2;
+    JLabel label1,label2,label3,label4,label5,usernamelabel, passwordlabel;
+    JTextField t1,t2, usernametf;
+    JPasswordField passwordfield;
     JRadioButton male,female;
     JComboBox day,month,year;
     JTextArea ta1;
@@ -67,12 +67,27 @@ class PatientRegistrationPage extends JFrame implements ActionListener{
         c.add(month);
         c.add(year);
 
+        usernamelabel = new JLabel("Enter Username: ");
+        usernamelabel.setBounds(20 , 130 , 100 , 20);
+        c.add(usernamelabel);
+        usernametf = new JTextField();
+        usernametf.setBounds(120 , 130, 100, 20);
+        c.add(t1);
+        c.add(usernametf);
+
+        passwordlabel = new JLabel("Enter Password: ");
+        passwordlabel.setBounds(230 , 130 , 100 , 20);
+        passwordfield = new JPasswordField();
+        passwordfield.setBounds(330, 130, 100,20);
+        c.add(passwordlabel);
+        c.add(passwordfield);
+
         label5 = new JLabel("Medical History");
-        label5.setBounds(20,130,100,20);
+        label5.setBounds(20,160,100,20);
         c.add(label5);
 
         ta1 = new JTextArea();
-        ta1.setBounds(20,160,220,80);
+        ta1.setBounds(20,190,220,80);
         c.add(ta1);
 
         submit = new JButton("Submit");
@@ -83,6 +98,7 @@ class PatientRegistrationPage extends JFrame implements ActionListener{
 		setVisible(true);
         
     }
+
     public static void main(String args[]){
         PatientRegistrationPage Register = new PatientRegistrationPage();
         }
@@ -110,7 +126,7 @@ class PatientRegistrationPage extends JFrame implements ActionListener{
                         statement2.setInt(1, newPatientID);
                         statement2.executeUpdate();
 
-                        String insertpatientdata = "INSERT INTO patient(PatientID, Name, Mobile, Gender, DOB, Medicalhistory) VALUES (?,?,?,?,?,?)";
+                        String insertpatientdata = "INSERT INTO patient(PatientID, Name, Mobile, Gender, DOB, Medicalhistory, username, password) VALUES (?,?,?,?,?,?,?,?)";
                         PreparedStatement statement = conn.prepareStatement(insertpatientdata);
                         statement.setInt(1, newPatientID);
                         statement.setString(2, t1.getText());
@@ -118,7 +134,9 @@ class PatientRegistrationPage extends JFrame implements ActionListener{
                         statement.setString(4, male.isSelected() ? "Male" : "Female");
                         String dob = year.getSelectedItem() + "-" + String.format("%02d", month.getSelectedIndex()+1) + "-" + String.format("%02d", Integer.parseInt((String) day.getSelectedItem()));
                         statement.setString(5, dob);
-                        statement.setString(6, ta1.getText());
+                        statement.setString(6, usernametf.getText());
+                        statement.setString(7, passwordfield.getText());
+                        statement.setString(8, ta1.getText());
                         int rowsInserted = statement.executeUpdate();
                         // JOptionPane.showMessageDialog(this, "Patient registration successful!");
                         System.out.println(rowsInserted + " row(s) inserted");
