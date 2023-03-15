@@ -1,9 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-
+import java.sql.*;
 public class PatientLoginPage extends JFrame implements ActionListener {
-    private JTextField emailField;
+    private JTextField usernameField;
     private JPasswordField passwordField;
     private JButton loginButton, forgotPasswordButton;
 
@@ -13,11 +13,10 @@ public class PatientLoginPage extends JFrame implements ActionListener {
         setSize(400, 200);
         setLayout(new GridLayout(3, 2));
 
-        // Email label and text field
-        JLabel emailLabel = new JLabel("Email: ");
-        add(emailLabel);
-        emailField = new JTextField();
-        add(emailField);
+        JLabel usernameLabel = new JLabel("Username: ");
+        add(usernameLabel);
+        usernameField = new JTextField();
+        add(usernameField);
 
         // Password label and password field
         JLabel passwordLabel = new JLabel("Password: ");
@@ -37,32 +36,55 @@ public class PatientLoginPage extends JFrame implements ActionListener {
 
         setVisible(true);
     }
-
+     
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == loginButton) {
-            // Check if email and password are valid
-            String email = emailField.getText();
+            // Check if username and password are valid
+            String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
-            if (isValid(email, password)) {
+            if (verifyPatientLogin(username, password)) {
                 // Redirect to home page
                 PatientHomePage patientHomePage = new PatientHomePage();
                 setVisible(false);
             } else {
-                // Show error message if email or password are invalid
-                JOptionPane.showMessageDialog(this, "Invalid email or password. Please try again.");
+                // Show error message if username or password are invalid
+                JOptionPane.showMessageDialog(this, "Invalid username or password. Please try again.");
             }
         } else if (e.getSource() == forgotPasswordButton) {
             // Show forgot password dialog
             JOptionPane.showMessageDialog(this, "Please contact customer support to reset your password.");
         }
     }
-
-    private boolean isValid(String email, String password) {
-
-        return !email.isEmpty() && !password.isEmpty();
-    }
-
+    public boolean verifyPatientLogin(String username, String password) {
+        boolean isValidLogin = false;
+        try {
+            // Connect to the MySQL database using XAMPP
+            String url = "jdbc:mysql://localhost:3306/HealthManagementSystem";
+            String user = "root";
+            String dbPassword = "";
+            Connection conn = DriverManager.getConnection(url, user, dbPassword);
+            System.out.println("Connected to the MySQL database");
+    
+            // Prepare a SELECT query to retrieve the patient record matching the entered login credentials
+            String selectPatient = "SELECT * FROM patient WHERE username = ? AND password = ?";
+            PreparedStatement statement = conn.prepareStatement(selectPatient);
+            statement.setString(1, usernameField.getText());
+            statement.setString(2, passwordField.getText());
+            ResultSet result = statement.executeQuery();
+    
+            // If the query returns a result, then the login credentials are valid
+            if (result.next()) {
+                isValidLogin = true;
+            }
+    
+            conn.close();
+            System.out.println("Disconnected from the MySQL database");
+        } catch (SQLException ex) {
+            System.err.println("Error connecting to the MySQL database: " + ex.getMessage());
+        }
+        return isValidLogin;
+    }   
     public static void main(String[] args) {
         PatientLoginPage patientLoginPage = new PatientLoginPage();
     }
