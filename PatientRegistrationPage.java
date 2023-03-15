@@ -91,7 +91,7 @@ class PatientRegistrationPage extends JFrame implements ActionListener{
         c.add(ta1);
 
         submit = new JButton("Submit");
-        submit.setBounds(20,250,80,20);
+        submit.setBounds(20,300,80,20);
         submit.addActionListener(this);
         c.add(submit);  
 
