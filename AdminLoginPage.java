@@ -40,7 +40,7 @@ public AdminLoginPage() {
             String password = new String(adminPasswordField.getPassword());
             if (verifyPatientLogin(username, password)) {
                 // Redirect to home page
-                AdminView admin = new AdminView();
+                AdminView adminv = new AdminView();
                 setVisible(false);
             } 
             else {

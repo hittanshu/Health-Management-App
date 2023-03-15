@@ -32,9 +32,11 @@ public class AdminView extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // Handle button clicks
         if (e.getSource() == patientButton) {
-            ManagePatientMenu patientManagementScreen = new ManagePatientMenu();
+            dispose();
+            ViewPatients patientManagementScreen = new ViewPatients();
         } else if (e.getSource() == doctorButton) {
-            ManageDoctorMenu doctorManagementScreen = new ManageDoctorMenu();
+            dispose();
+            ViewDoctors doctorManagementScreen = new ViewDoctors();
         }
     }
     public static void main(String[] args) {
