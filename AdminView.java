@@ -17,20 +17,11 @@ public class AdminView extends JFrame implements ActionListener {
         patientButton.addActionListener(this);
         doctorButton = new JButton("Manage Doctors");
         doctorButton.addActionListener(this);
-        appointmentButton = new JButton("Manage Appointments");
-        appointmentButton.addActionListener(this);
-        prescriptionButton = new JButton("Manage Prescriptions");
-        prescriptionButton.addActionListener(this);
-        billingButton = new JButton("Manage Billing");
-        billingButton.addActionListener(this);
 
         // Add the buttons to the content pane
-        JPanel buttonPanel = new JPanel(new GridLayout(5, 1));
+        JPanel buttonPanel = new JPanel(new GridLayout(2, 1));
         buttonPanel.add(patientButton);
         buttonPanel.add(doctorButton);
-        buttonPanel.add(appointmentButton);
-        buttonPanel.add(prescriptionButton);
-        buttonPanel.add(billingButton);
         getContentPane().add(buttonPanel);
 
         // Display the frame
@@ -46,16 +37,6 @@ public class AdminView extends JFrame implements ActionListener {
         } else if (e.getSource() == doctorButton) {
             // Open the doctor management screen
             // DoctorManagementScreen doctorManagementScreen = new DoctorManagementScreen();
-        } else if (e.getSource() == appointmentButton) {
-            // Open the appointment management screen
-            // AppointmentManagementScreen appointmentManagementScreen = new AppointmentManagementScreen();
-        } else if (e.getSource() == prescriptionButton) {
-            // Open the prescription management screen
-            // PrescriptionManagementScreen prescriptionManagementScreen = new PrescriptionManagementScreen();
-        } else if (e.getSource() == billingButton) {
-            // Open the billing management screen
-            // BillingManagementScreen billingManagementScreen = new BillingManagementScreen();
-        }
     }
 
     public static void main(String[] args) {
