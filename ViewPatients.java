@@ -50,14 +50,9 @@ public class ViewPatients extends JFrame {
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // open add patient dialog
-                AddPatientDialog dialog = new AddPatientDialog(ViewPatients.this);
-                dialog.setVisible(true);
-                
-                // reload table data after dialog is closed
-                if (dialog.isDialogResultOk()) {
-                    loadData();
-                }
+                dispose();
+                PatientRegistrationPage reg = new PatientRegistrationPage();
+
             }
         });
         
