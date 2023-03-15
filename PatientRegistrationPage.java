@@ -114,7 +114,7 @@ class PatientRegistrationPage extends JFrame implements ActionListener{
                         statement.setString(5, dob);
                         statement.setString(6, ta1.getText());
                         int rowsInserted = statement.executeUpdate();
-                        
+                        JOptionPane.showMessageDialog(this, "Patient registration successful!");
                         System.out.println(rowsInserted + " row(s) inserted");
                         conn.close();
                         System.out.println("Disconnected from the MySQL database");
