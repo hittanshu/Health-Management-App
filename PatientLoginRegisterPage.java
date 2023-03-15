@@ -11,6 +11,8 @@ public class PatientLoginRegisterPage extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 300);
         setLayout(new GridLayout(3, 1));
+        Image icon = Toolkit.getDefaultToolkit().getImage("icon.png");
+        setIconImage(icon);
         
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
         
