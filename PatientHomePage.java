@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.time.LocalDate;
 
@@ -13,53 +14,66 @@ public class PatientHomePage extends JFrame {
         super("Patient Home Page");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(700, 700);
-        setLayout(new GridLayout(4, 2));
+        setLayout(new GridLayout(4, 1));
 
-        // Welcome User
-        welcomeLabel = new JLabel("Welcome Hittanshu ! ");
-        add(welcomeLabel);
+        // Create top panel
+        JPanel topPanel = new JPanel();
+        topPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+        topPanel.setBackground(new Color(218, 227, 243));
+        welcomeLabel = new JLabel("Welcome!");
+        welcomeLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+        topPanel.add(welcomeLabel);
+        add(topPanel);
 
-        // Upcoming Appointments
+        // Create appointments panel
         appointmentsPanel = new JPanel();
-        appointmentsPanel.setLayout(new BoxLayout(appointmentsPanel, BoxLayout.LINE_AXIS));
-        upcomingAppointmentsLabel = new JLabel("Upcoming Appointments: ");
+        appointmentsPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+        appointmentsPanel.setBackground(Color.WHITE);
+        upcomingAppointmentsLabel = new JLabel("Upcoming Appointments:");
+        upcomingAppointmentsLabel.setFont(new Font("Arial", Font.BOLD, 16));
         upcomingAppointmentsTextArea = new JTextArea(2, 30);
         upcomingAppointmentsTextArea.setEditable(false);
-        upcomingAppointmentsScrollPane = new JScrollPane(upcomingAppointmentsTextArea);
+        upcomingAppointmentsTextArea.setFont(new Font("Arial", Font.PLAIN, 14));
         upcomingAppointmentsTextArea.setText("Appointment with Dr. Smith on " + LocalDate.now().plusDays(2) +
                 "\nAppointment with Dr. Johnson on " + LocalDate.now().plusDays(5));
+        upcomingAppointmentsScrollPane = new JScrollPane(upcomingAppointmentsTextArea);
         appointmentsPanel.add(upcomingAppointmentsLabel);
         appointmentsPanel.add(upcomingAppointmentsScrollPane);
         add(appointmentsPanel);
 
-        // Medications
+        // Create medication panel
         medicationPanel = new JPanel();
-        medicationPanel.setLayout(new BoxLayout(medicationPanel, BoxLayout.LINE_AXIS));
-        medicationLabel = new JLabel("Medications: ");
+        medicationPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+        medicationPanel.setBackground(new Color(218, 227, 243));
+        medicationLabel = new JLabel("Medications:");
+        medicationLabel.setFont(new Font("Arial", Font.BOLD, 16));
         medicationTextArea = new JTextArea(2, 30);
         medicationTextArea.setEditable(false);
-        medicationScrollPane = new JScrollPane(medicationTextArea);
+        medicationTextArea.setFont(new Font("Arial", Font.PLAIN, 14));
         medicationTextArea.setText("Aspirin - 1 tablet every 4 hours\nIbuprofen - 1 tablet every 6 hours");
+        medicationScrollPane = new JScrollPane(medicationTextArea);
         medicationPanel.add(medicationLabel);
         medicationPanel.add(medicationScrollPane);
         add(medicationPanel);
 
-        // Notifications
+        // Create notifications panel
         notificationsPanel = new JPanel();
-        notificationsPanel.setLayout(new BoxLayout(notificationsPanel, BoxLayout.LINE_AXIS));
-        notificationsLabel = new JLabel("Notifications: ");
+        notificationsPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+        notificationsPanel.setBackground(Color.WHITE);
+        notificationsLabel = new JLabel("Notifications:");
+        notificationsLabel.setFont(new Font("Arial", Font.BOLD, 16));
         notificationsTextArea = new JTextArea(2, 30);
         notificationsTextArea.setEditable(false);
-        notificationsScrollPane = new JScrollPane(notificationsTextArea);
+        notificationsTextArea.setFont(new Font("Arial", Font.PLAIN, 14));
         notificationsTextArea.setText("Reminder: Your appointment with Dr. Smith is in 2 days\nImportant: " +
                 "Please update your medication list with Dr. Johnson");
+        notificationsScrollPane = new JScrollPane(notificationsTextArea);
         notificationsPanel.add(notificationsLabel);
         notificationsPanel.add(notificationsScrollPane);
         add(notificationsPanel);
 
         setVisible(true);
     }
-    
 
     public static void main(String args[]) {
         PatientHomePage PatientHome = new PatientHomePage();
