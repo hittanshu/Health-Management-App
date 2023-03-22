@@ -5,16 +5,16 @@ import java.time.LocalDate;
 
 public class PatientHomePage extends JFrame {
     private JLabel welcomeLabel;
-    private JPanel appointmentsPanel, medicationPanel, notificationsPanel;
-    private JLabel upcomingAppointmentsLabel, medicationLabel, notificationsLabel;
-    private JTextArea upcomingAppointmentsTextArea, medicationTextArea, notificationsTextArea;
-    private JScrollPane upcomingAppointmentsScrollPane, medicationScrollPane, notificationsScrollPane;
+    private JPanel appointmentsPanel, medicationPanel, notificationsPanel, diseasPanel;
+    private JLabel upcomingAppointmentsLabel, medicationLabel, notificationsLabel, diseasLabel;
+    private JTextArea upcomingAppointmentsTextArea, medicationTextArea, notificationsTextArea, diseasTextArea;
+    private JScrollPane upcomingAppointmentsScrollPane, medicationScrollPane, notificationsScrollPane, diseaseScrollPane;
 
     public PatientHomePage() {
         super("Patient Home Page");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(700, 700);
-        setLayout(new GridLayout(4, 1));
+        setLayout(new GridLayout(5, 1));
 
         // Create top panel
         JPanel topPanel = new JPanel();
@@ -71,6 +71,21 @@ public class PatientHomePage extends JFrame {
         notificationsPanel.add(notificationsLabel);
         notificationsPanel.add(notificationsScrollPane);
         add(notificationsPanel);
+
+        // Create disease panel
+        diseasPanel = new JPanel();
+        diseasPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+        diseasPanel.setBackground(Color.WHITE);
+        diseasLabel = new JLabel("Diseases around you: ");
+        diseasLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        diseasTextArea = new JTextArea(2, 30);
+        diseasTextArea.setEditable(false);
+        diseasTextArea.setFont(new Font("Arial", Font.PLAIN, 14));
+        diseasTextArea.setText("There are 12 reported covid cases in your area.");
+        diseaseScrollPane = new JScrollPane(diseasTextArea);
+        diseasPanel.add(diseasLabel);
+        diseasPanel.add(diseaseScrollPane);
+        add(diseasPanel);
 
         setVisible(true);
     }
