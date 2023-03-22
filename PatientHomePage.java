@@ -1,20 +1,23 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.awt.event.*;
 
-public class PatientHomePage extends JFrame {
+public class PatientHomePage extends JFrame implements ActionListener{
     private JLabel welcomeLabel;
     private JPanel appointmentsPanel, medicationPanel, notificationsPanel, diseasPanel;
     private JLabel upcomingAppointmentsLabel, medicationLabel, notificationsLabel, diseasLabel;
     private JTextArea upcomingAppointmentsTextArea, medicationTextArea, notificationsTextArea, diseasTextArea;
     private JScrollPane upcomingAppointmentsScrollPane, medicationScrollPane, notificationsScrollPane, diseaseScrollPane;
+    private JButton appointmentButton;
 
     public PatientHomePage() {
         super("Patient Home Page");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(700, 700);
-        setLayout(new GridLayout(5, 1));
+        setLayout(new GridLayout(6, 1));
 
         // Create top panel
         JPanel topPanel = new JPanel();
@@ -40,6 +43,10 @@ public class PatientHomePage extends JFrame {
         appointmentsPanel.add(upcomingAppointmentsLabel);
         appointmentsPanel.add(upcomingAppointmentsScrollPane);
         add(appointmentsPanel);
+        appointmentButton = new JButton("Manage appointments");
+        appointmentButton.addActionListener(this);
+        add(appointmentButton);
+
 
         // Create medication panel
         medicationPanel = new JPanel();
@@ -88,6 +95,13 @@ public class PatientHomePage extends JFrame {
         add(diseasPanel);
 
         setVisible(true);
+    }
+    @Override
+    public void actionPerformed(ActionEvent e){
+        if(e.getSource()==appointmentButton){
+            PatientAppointment patientAppointment = new PatientAppointment();
+            setVisible(false);
+        }
     }
 
     public static void main(String args[]) {
