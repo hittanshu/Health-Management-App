@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+import static javax.swing.JOptionPane.showMessageDialog;
 class PatientRegistrationPage extends JFrame implements ActionListener{
 
     JLabel label1,label2,label3,label4,label5,usernamelabel, passwordlabel;
@@ -67,7 +70,7 @@ class PatientRegistrationPage extends JFrame implements ActionListener{
         c.add(month);
         c.add(year);
 
-        usernamelabel = new JLabel("Enter Username: ");
+        usernamelabel = new JLabel("Enter Username (Email): ");
         usernamelabel.setBounds(20 , 130 , 100 , 20);
         c.add(usernamelabel);
         usernametf = new JTextField();
@@ -98,7 +101,12 @@ class PatientRegistrationPage extends JFrame implements ActionListener{
 		setVisible(true);
         
     }
-
+    public boolean checkRegex(String input, String regex) {
+        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(input);
+        return matcher.find();
+    }
+    
     public static void main(String args[]){
         PatientRegistrationPage Register = new PatientRegistrationPage();
         }
@@ -106,48 +114,68 @@ class PatientRegistrationPage extends JFrame implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == submit) {
-                    try {
-                        // Connect to the MySQL database using XAMPP
-                        String url = "jdbc:mysql://localhost:3306/HealthManagementSystem";
-                        String user = "root";
-                        String password = "";
-                        Connection conn = DriverManager.getConnection(url, user, password);
-                        System.out.println("Connected to the MySQL database");
-                
-                        //for continously incrementing patient id
-                        String selectpatientid = "SELECT latest_id FROM patient_id";
-                        Statement statement1 = conn.createStatement();
-                        ResultSet resultSet = statement1.executeQuery(selectpatientid);
-                        resultSet.next();
-                        int latestPatientID = resultSet.getInt("latest_id");
-                        int newPatientID = latestPatientID + 1;
-                        String updatepatientid = "UPDATE patient_id SET latest_id = ?";
-                        PreparedStatement statement2 = conn.prepareStatement(updatepatientid);
-                        statement2.setInt(1, newPatientID);
-                        statement2.executeUpdate();
+                String regex_check_username = usernametf.getText();
+                String regex_username = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+                char[] regex_check_password = passwordfield.getPassword();
+                String passString = new String(regex_check_password);
+                String regex_pass = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
 
-                        String insertpatientdata = "INSERT INTO patient(PatientID, Name, Mobile, Gender, DOB, Medicalhistory, username, password) VALUES (?,?,?,?,?,?,?,?)";
-                        PreparedStatement statement = conn.prepareStatement(insertpatientdata);
-                        statement.setInt(1, newPatientID);
-                        statement.setString(2, t1.getText());
-                        statement.setString(3, t2.getText());
-                        statement.setString(4, male.isSelected() ? "Male" : "Female");
-                        String dob = year.getSelectedItem() + "-" + String.format("%02d", month.getSelectedIndex()+1) + "-" + String.format("%02d", Integer.parseInt((String) day.getSelectedItem()));
-                        statement.setString(5, dob);
-                        statement.setString(6, ta1.getText());
-                        statement.setString(7, usernametf.getText());
-                        statement.setString(8, passwordfield.getText());
-                        int rowsInserted = statement.executeUpdate();
-                        // JOptionPane.showMessageDialog(this, "Patient registration successful!");
-                        System.out.println(rowsInserted + " row(s) inserted");
-                        conn.close();
-                        System.out.println("Disconnected from the MySQL database");
+                if(checkRegex(regex_check_username, regex_username)){
+                    if (checkRegex(passString, regex_pass)){
+                        try {
+                            // Connect to the MySQL database using XAMPP
+                            String url = "jdbc:mysql://localhost:3306/HealthManagementSystem";
+                            String user = "root";
+                            String password = "";
+                            Connection conn = DriverManager.getConnection(url, user, password);
+                            System.out.println("Connected to the MySQL database");
+                    
+                            //for continously incrementing patient id
+                            String selectpatientid = "SELECT latest_id FROM patient_id";
+                            Statement statement1 = conn.createStatement();
+                            ResultSet resultSet = statement1.executeQuery(selectpatientid);
+                            resultSet.next();
+                            int latestPatientID = resultSet.getInt("latest_id");
+                            int newPatientID = latestPatientID + 1;
+                            String updatepatientid = "UPDATE patient_id SET latest_id = ?";
+                            PreparedStatement statement2 = conn.prepareStatement(updatepatientid);
+                            statement2.setInt(1, newPatientID);
+                            statement2.executeUpdate();
+    
+                            String insertpatientdata = "INSERT INTO patient(PatientID, Name, Mobile, Gender, DOB, Medicalhistory, username, password) VALUES (?,?,?,?,?,?,?,?)";
+                            PreparedStatement statement = conn.prepareStatement(insertpatientdata);
+                            statement.setInt(1, newPatientID);
+                            statement.setString(2, t1.getText());
+                            statement.setString(3, t2.getText());
+                            statement.setString(4, male.isSelected() ? "Male" : "Female");
+                            String dob = year.getSelectedItem() + "-" + String.format("%02d", month.getSelectedIndex()+1) + "-" + String.format("%02d", Integer.parseInt((String) day.getSelectedItem()));
+                            statement.setString(5, dob);
+                            statement.setString(6, ta1.getText());
+                            statement.setString(7, usernametf.getText());
+                            statement.setString(8, passwordfield.getText());
+                            int rowsInserted = statement.executeUpdate();
+                            // JOptionPane.showMessageDialog(this, "Patient registration successful!");
+                            System.out.println(rowsInserted + " row(s) inserted");
+                            conn.close();
+                            System.out.println("Disconnected from the MySQL database");
+                        }
+                        catch (SQLException ex){
+                            System.err.println("Error connecting to the MySQL database: " + ex.getMessage());
+                        }
+                        PatientLoginRegisterPage patientHomePageafterreg = new PatientLoginRegisterPage();
+                        setVisible(false);
                     }
-                    catch (SQLException ex){
-                        System.err.println("Error connecting to the MySQL database: " + ex.getMessage());
+                    else{
+                        showMessageDialog(null, "Incorrect Password Format, Password should have \n 1. Atleast 1 lowercase letter \n 2. 1 uppercase letter \n 3. 1 digit \n 4. 1 special character \n 5. Length of 8 characters");
+                        this.dispose();
+                        new PatientRegistrationPage();
                     }
                 }
-                    PatientLoginRegisterPage patientHomePageafterreg = new PatientLoginRegisterPage();
-                    setVisible(false);
+                else {
+                    showMessageDialog(null, "Incorrect Email format, Please enter again");
+                    this.dispose();
+                    new PatientRegistrationPage();
+                }
                 }
             }
+        }
