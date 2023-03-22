@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.awt.event.*;
 
@@ -17,7 +18,7 @@ public class PatientHomePage extends JFrame implements ActionListener{
         super("Patient Home Page");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(700, 700);
-        setLayout(new GridLayout(6, 1));
+        setLayout(new GridLayout(7, 1));
 
         // Create top panel
         JPanel topPanel = new JPanel();
@@ -27,6 +28,22 @@ public class PatientHomePage extends JFrame implements ActionListener{
         welcomeLabel.setFont(new Font("Arial", Font.PLAIN, 20));
         topPanel.add(welcomeLabel);
         add(topPanel);
+
+        JPanel pythonPanel = new JPanel();
+        JButton pythonButton = new JButton("Talk to DigiAssist!");
+        pythonButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    ProcessBuilder pb = new ProcessBuilder("python", "DigiAssist.py");
+                    pb.start();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+        pythonPanel.add(pythonButton);
+        add(pythonPanel);
 
         // Create appointments panel
         appointmentsPanel = new JPanel();
@@ -93,6 +110,7 @@ public class PatientHomePage extends JFrame implements ActionListener{
         diseasPanel.add(diseasLabel);
         diseasPanel.add(diseaseScrollPane);
         add(diseasPanel);
+
 
         setVisible(true);
     }
