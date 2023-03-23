@@ -30,7 +30,7 @@ public class PatientAppointment extends JFrame implements ActionListener {
 
         // Create cancel and reschedule buttons
         cancelButton = new JButton("Cancel Appointment");
-        rescheduleButton = new JButton("Reschedule Appointment");
+        rescheduleButton = new JButton("Add Appointment");
 
         // Add action listeners to the buttons
         cancelButton.addActionListener(this);
