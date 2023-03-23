@@ -1,7 +1,7 @@
 import tkinter as tk
 import openai
 
-openai.api_key = "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"
+#openai.api_key = "openAI API Key removed to ensure safety and prevent misuse of the Chatbot. Please raise an issue if you want to know more about the usage of the API.""
 
 messages = []
 messages.append({"role": "system", "content": "health issues"})
